@@ -8,12 +8,12 @@ function Sveiki({a}) {
        }>Zebrai ir Bebrai</h1>
    };
    if (a === 2) {
-       return <h2
+       return <h1
        style={
            {
                color: 'green'
            }
-       }>Zebrai ir Bebrai</h2>
+       }>Zebrai ir Bebrai</h1>
    };
 };
 // Sveiki(1)
