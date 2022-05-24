@@ -1,58 +1,82 @@
-import { useState } from 'react';
-import './App.css';
+import { useEffect, useRef, useState } from 'react';
+import './App.scss';
 
-//1. Atvaizduoti masyvą dogs. Kiekvienas šuo atskirame kvadrate.
-
-//2. Atvaizduoti masyvą dogs. Kiekvienas šuo atskirame apskritime. Šunys 
-//turi būti išrūšiuoti nuo ilgiausio žodžio iki trumpiausio, o apskritimai sunumeruoti nuo 1 iki galo.
-
-//3. Atvaizduoti masyvą dogs. Poriniuose indeksuose esančius šunis atvaizduoti kvadratuose, neporinius apskritime.
-
-//4. Atvaizduoti masyvą dogs. Šunis, kurie prasideda didžiąja raide praleisti (neatvaizduoti).
-
-//5. Naudojant masyvą dogs atvaizduoti skaičius, kurie yra lygūs žodžių masyve ilgiui. Skaičius, 
-//didesnius nei 6 atvaizduoti žaliai, kitus raudonai.
-
-
+import rand from "./Functions/rand";
 function App() {
-    const dogs = ['šuo', 'šunius', 'Bobikas', 'kudlius', 'Šarikas', 'avigalvis'];
-    const [dog, setDog] = useState([]);
-    dogs.sort((a, b) => a.length - b.length);
-    let lyg = 0;
-    let neLyg = 0;
-    // const vienasDog = () =>
-    // { for (let i = 0; i < dogs.length; i++) {
-    //   if (dogs % 2 == 0) {
-    //     dogs[i] = lyg
-    //     return lyg
-    //   }if (dogs % 2 !== 0) {
-    //     neLyg = i;
-    //   }return neLyg;
-       
-      
-    // }
-{
-    } 
-    console.log(lyg, neLyg);
-    console.log(dogs);
+    const [count, setCount] = useState(null);
+    const panda = useRef();
+    const mano = useRef(0); // tiesiog kaip plain javaScript kintamasis https://dmitripavlutin.com/react-useref-guide/
+
+    useEffect(() => {
+        setCount(parseInt(localStorage.getItem('count') ?? 0 ));// A = B ?? 0 ,  du klaustukai reiskia, kad jeigu B yra null turime dafaultine reiksmia kuria galime priskirti A default ==> 0
+    }, []);
+
+    useEffect(() => {
+        if (null == count) {
+            return;
+        }
+        localStorage.setItem('count', count);
+    }, [count]);
+
+
+    const [kv, setKv] = useState(null);
+    const addKv = () => {
+        setKv(k => [...k, 'red']);
+    }
+
+    const remKv = () => {
+        setKv(k => k.slice(1));
+    }
+
+    useEffect(() => {
+        setKv(JSON.parse(localStorage.getItem('kv') ?? '[]'));
+    }, []);
+
+    useEffect(() => {
+        if (null === kv) {
+            return;
+        }
+        localStorage.setItem('kv', JSON.stringify(kv));
+    }, [kv]);
+
+
+    const add = () => {
+        setCount(c =>  c + 1);
+        mano.current = mano.current + 3;
+        // mano = mano + 3;
+        console.log(mano.current);
+        const p = panda.current;
+        // console.log(p.dataset.panda);
+    }
+
+    const addDog = () => {
+        localStorage.setItem('Dog', JSON.stringify(['Reksas', 'Lese'])); // JSON.stringify leidzia i local storage ideti masyva kaip masyva ne  stringa
+    }
+    const getDog = () => {
+        console.log(JSON.parse(localStorage.getItem('Dog')));// jei bandome paimti tai ko nera gauname null
+    } //JSON.parse leidzia i console isloginti masyva vietoj stringo
+    const remDog = () => {
+        localStorage.removeItem('Dog');
+    }
+
+
   return (
     <div className="App">
       <header className="App-header">
-        <div className='kvc'>
-        {
-              dogs.map( (c, i) => <div className='kv' key={i}>{dogs[i]}</div>)
-            }
+        <h1> useRef LocalStorage {count}</h1>
+        <button onClick={add}>+</button>
+        <button onClick={addDog}>Add Dog</button>
+        <button onClick={getDog}>Get Dog</button>
+        <button onClick={remDog}>Rem Dog</button>
+        <button onClick={addKv}>Add [kvadratas]</button>
+        <button onClick={remKv}>Rem [kvadratas]</button>
+        <div className="kvC">
+       { 
+          kv ? kv.map( (_, i) => <div className='kv' key={i} > {i + 1}</div>) : null
+       }
+       </div>
+        <div  ref={panda} data-panda='miega'></div>
 
-            {
-              dogs.map((c, i ) => <div className='crc' key={c}>{dogs[i]} {i + 1}</div> )
-            }
-            
-            {/* <div className='kv'></div>
-            <div className='kv'></div>
-            <div className='kv'></div>
-            <div className='kv'></div>
-            <div className='kv'></div> */}
-        </div>
       </header>
     </div>
   );
