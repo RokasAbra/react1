@@ -52,6 +52,7 @@ h1 {
   transition: 1s;
 }
 .kvc {
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -82,10 +83,10 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 120px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   background-color: rgb(114, 192, 131);
-  margin: 8px;
+  margin: 4px;
   transition: 1s;
 }
 
@@ -198,12 +199,9 @@ button {
 
 .container {
   position: relative;
-  width: 680px;
+  width: 250px;
   height: 350px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
+  display: inline-block;
   background-color:rgb(114, 192, 131);
   top: 0px;
   left: 0px;
