@@ -194,3 +194,17 @@ button {
     opacity: 0;
   }
 }
+
+
+.container {
+  position: relative;
+  width: 680px;
+  height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color:rgb(114, 192, 131);
+  top: 0px;
+  left: 0px;
+}

@@ -1,45 +1,40 @@
-import { useState } from "react";
-import "./App.scss";
-import Sunys from "./components/uzdv/Rbl";
+import { useRef, useState } from 'react';
+import './App.scss';
+import rand from './Functions/rand';
 
-//1. Atvaizduoti masyvą dogs. Kiekvienas šuo atskirame kvadrate.
+// Sukurti aplikaciją su mygtuku “Pridėti”, kurį paspaudus atsiranda rand 5-10 kvadratukai.
+// Paspaudus dar kartą dar prisideda rand kvadratukų skaičius. Puslapį perkrovus kvadratukų
+// skaičius pasilieka nepakitęs. Padaryti mygtuką “Išvalyti”, kurį paspaudus visi kvadratukai
+// dingsta. Padaryti mygtuką “Atgal”, kurį paspaudus kvadratukų skaičius pasidaro lygus 
+// skaičiui, buvusiam prieš paspaudus mygtuką “Pridėti”, o paspaudus dar kartą grįžtama
+// dar vienu žingsniu atgal (t.y. reikia sukurti “undo” funkcionalumą). Puslapiui 
+// persikrovus istorija yra užmirštama. Saugoma tik istorija iki puslapiui persikraunant. 
+// Į istoriją turi būti pridedami veiksmai tiek iš “Pridėti” tiek iš “Išvalyti” mygtukų 
+// paspaudimo.
 
-//2. Atvaizduoti masyvą dogs. Kiekvienas šuo atskirame apskritime. Šunys
-//turi būti išrūšiuoti nuo ilgiausio žodžio iki trumpiausio, o apskritimai sunumeruoti nuo 1 iki galo.
 
-//3. Atvaizduoti masyvą dogs. Poriniuose indeksuose esančius šunis atvaizduoti kvadratuose, neporinius apskritime.
-
-//4. Atvaizduoti masyvą dogs. Šunis, kurie prasideda didžiąja raide praleisti (neatvaizduoti).
-
-//5. Naudojant masyvą dogs atvaizduoti skaičius, kurie yra lygūs žodžių masyve ilgiui. Skaičius,
-//didesnius nei 6 atvaizduoti žaliai, kitus raudonai.
 
 function App() {
-  const dogs = ["šuo", "šunius", "Bobikas", "kudlius", "Šarikas", "avigalvis"];
-  const [dog, setDog] = useState([]);
-  dogs.sort((a, b) => a.length - b.length);
-
-  console.log(dogs);
+    const [kv, setKv] = useState([]);
+    const prideti = () => {
+        const kiekis = rand(5, 10);
+        const kvadratukai = [];
+        for (let i = 0; i < kiekis; i++) {
+            kvadratukai.push('--^.^--');
+        }
+        setKv(k => [...k, ...kvadratukai]);
+    }
+    
   return (
     <div className="App">
       <header className="App-header">
-        <div className="kvc">
-          {dogs.map(
-            (dog, i) => i % 2 === 0 && <div className={"kv"} key={i}> {dog}</div>
-          )}
-          {dogs.map(
-            (dog, i) => i % 2 !== 0 && <div className={"crc"} key={i}> {dog}</div>
-          )}
-          {
-            dogs.map(
-              (dog,i) => dog[0] !== dog[0].toUpperCase() && <div className={"crc"} style={{color: 'black'}} key={i} >{dog}</div>
-            )
-          }
-          {
-            dogs.map(
-              (dog,i) => dog.length < 6 ? <div className="kv" style={{backgroundColor: "white", color: 'red'}} key={i}>{dog.length} {dog}</div> : <div className="kv" style={{backgroundColor: "green"}} key={i}>{dog.length} {dog}</div> )
-          }
-        </div>
+          <h1>Uzdaviniu sprendimas</h1>
+          <div className='kvc'>
+              {
+                  kv.map((k, i) => <div className='kv' key={i}>{k}</div> )
+              }
+          </div>
+          <button onClick={prideti}>Prideti</button>
       </header>
     </div>
   );

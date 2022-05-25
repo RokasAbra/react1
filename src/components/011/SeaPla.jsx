@@ -1,6 +1,3 @@
-import './App.css';
-import Tvenkinys from './components/011/tvenkinys';
-import rand from "./Functions/rand";
 const seaPlaners = [
     {id: 1, type: 'man', name: 'Lina', color: 'blue'},
     {id: 2, type: 'car', name: 'Opel', color: 'red'},
@@ -13,18 +10,4 @@ const seaPlaners = [
     {id: 9, type: 'car', name: 'ZIL', color: 'red'},
     {id: 10, type: 'man', name: 'Teta Toma', color: 'yellow'},
   ];
-function App() {
-    
-      
- 
-
-  return (
-    <div className="App">
-      <header className="App-header">
-      <Tvenkinys seaPlaners={seaPlaners}></Tvenkinys>
-      </header>
-    </div>
-  );
-}
-
-export default App;
+  export default seaPlaners;
