@@ -58,9 +58,11 @@ h1 {
   align-items: center;
   flex-wrap: wrap;
   margin: 20px;
+  background-color: #ffff;
 }
 .crc {
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   width: 120px;
@@ -199,10 +201,39 @@ button {
 
 .container {
   position: relative;
-  width: 250px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 600px;
   height: 350px;
-  display: inline-block;
-  background-color:rgb(114, 192, 131);
+  background-color:rgb(110, 160, 181);
   top: 0px;
   left: 0px;
+  margin: 8px;
 }
+
+
+
+.kvv {
+  display: inline-block;
+  width: 45px;
+  height: 45px;
+  background-color: crimson;
+  margin: 8px;
+  transition: 2s;
+  font-size: 10px;
+}
+
+.crcc {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  align-content: center;
+  border-radius: 35px;
+  background-color: blue;
+  transition: 1s;
+  font-size: 10px;
+}
+
+
