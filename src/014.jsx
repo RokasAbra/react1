@@ -29,7 +29,7 @@ function App() {
             onChange={(e) => setText(e.target.value)}
             value={text}
           />
-          {/* <input type="text" onChange={inputText} value={text} /> */}
+          <input type="text" onChange={inputText} value={text} />
           <fieldset>
               <legend>Select</legend>
           <select value={select} onChange={(e) => setSelect(e.target.value)}>
