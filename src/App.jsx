@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react";
 import "./bootstrap.css";
+import "./crud.scss";
 import Create from "./components/crud/Create";
 // import "./App.scss";
 import getId from "./Functions/getId";
-import { create } from "./Functions/localStorage";
+import { create, remove } from "./Functions/localStorage";
 import rand from "./Functions/rand";
 import List from "./components/crud/List";
 import { read } from "./Functions/localStorage";
+import Edit from "./components/crud/Edit";
 
 function App() {
     const [lastUpdate, setLastUpdate] = useState(Date.now());
+    const [modalData, setModalData] = useState(null);
 
     const [createData, setCreateData] = useState(null); // Create
     const [exes, setExes] = useState(null); // Read
+    const [deleteData, setDeleteData] = useState(null);//Delete
     
 
 
@@ -27,10 +31,24 @@ function App() {
 
     }, [createData]);
 
+
+
     //2. Read
     useEffect(() => {
         setExes(read())
     }, [lastUpdate])
+
+ //Delete
+ useEffect(() => {
+    if (null === deleteData) {
+        return;
+    }
+    remove(deleteData);
+    setLastUpdate(Date.now());
+    // to localStorage
+
+}, [deleteData]);
+
   return (
     <>
     <div className="container">
@@ -39,10 +57,11 @@ function App() {
                 <Create setCreateData={setCreateData}></Create>
             </div>
             <div className="col-8">
-               <List exes={exes}></List>
+               <List exes={exes} setDeleteData={setDeleteData} setModalData={setModalData}></List>
             </div>
         </div>
     </div>
+    <Edit modalData={modalData} setModalData={setModalData}></Edit>
 </>
 );
 }
