@@ -1,69 +1,68 @@
 import { useEffect, useState } from "react";
-import "./bootstrap.css";
-import "./crud.scss";
-import Create from "./components/crud/Create";
-// import "./App.scss";
-import getId from "./Functions/getId";
-import { create, remove } from "./Functions/localStorage";
+import "./App.scss";
+import InputNumber from "./components/forms/FormsInput";
 import rand from "./Functions/rand";
-import List from "./components/crud/List";
-import { read } from "./Functions/localStorage";
-import Edit from "./components/crud/Edit";
-
+import Cats from "./components/forms/Cats";
+import Nums from "./components/forms/Nums";
+import Select from "./components/forms/Select";
+/*Sukurti komponentą su mygtuku ir įvedimo laukeliu. Įvedus į laukelį skaičių ir paspaudus 
+mygtuką, atsiranda laukelyje nurodytas raudonų kvadratėlių skaičius. Įvedus kitą skaičių ir 
+paspaudus mygtuką, prie jau egzistuojančių kvadratėlių papildomai prisideda naujas laukelyje 
+nurodytas kvadratėlių kiekis. Kiekvieno kvadratėlio viduryje turi būti pavaizduotas rand 
+skaičius 100 - 200. */
 function App() {
-    const [lastUpdate, setLastUpdate] = useState(Date.now());
-    const [modalData, setModalData] = useState(null);
+  const [kvadratukai, setKvadratukai] = useState(null);
+  const [vnt, setVnt] = useState("");
+  const inputNumber = (e) => {
+    setVnt(e.target.value);
+  };
 
-    const [createData, setCreateData] = useState(null); // Create
-    const [exes, setExes] = useState(null); // Read
-    const [deleteData, setDeleteData] = useState(null);//Delete
-    
-
-
-    //1. Create
-    useEffect(() => {
-        if (null === createData) {
-            return;
-        }
-        create(createData);
-        setLastUpdate(Date.now());
-        // to localStorage
-
-    }, [createData]);
-
-
-
-    //2. Read
-    useEffect(() => {
-        setExes(read())
-    }, [lastUpdate])
-
- //Delete
- useEffect(() => {
-    if (null === deleteData) {
-        return;
+  const add = (num) => {
+    const nmr = parseInt(num);
+    const kvadratukai = [];
+    for (let i = 0; i < nmr; i++) {
+      kvadratukai.push(rand(100, 200));
     }
-    remove(deleteData);
-    setLastUpdate(Date.now());
-    // to localStorage
+    setKvadratukai((k) =>
+      null === k ? [...kvadratukai] : [...k, ...kvadratukai]
+    );
+  };
 
-}, [deleteData]);
 
   return (
-    <>
-    <div className="container">
-        <div className="row">
-            <div className="col-4">
-                <Create setCreateData={setCreateData}></Create>
+    <div className="App">
+      <header className="App-header">
+        <h1>Formos Uzdv.</h1>
+        <fieldset>
+          <fieldset>
+            <legend>Kvadratai</legend>
+            <div className="kvc">
+              {kvadratukai
+                ? kvadratukai.map((k, i) => (
+                    <div key={i} className="kv">
+                      {k}
+                    </div>
+                  ))
+                : null}
+              <input type="text" onChange={inputNumber} />
+              <button onClick={() => add(vnt)}>Push</button>
             </div>
-            <div className="col-8">
-               <List exes={exes} setDeleteData={setDeleteData} setModalData={setModalData}></List>
+          </fieldset>
+          <fieldset>
+            <legend>Katinukai</legend>
+            <div className="kvc">
+              <input type="text" />
+              <input type="text" />
+              <button>Push</button>
             </div>
-        </div>
+          </fieldset>
+          <Cats></Cats>
+          <Nums></Nums>
+          <Select></Select>
+        </fieldset>
+      </header>
     </div>
-    <Edit modalData={modalData} setModalData={setModalData}></Edit>
-</>
-);
+  );
 }
 
 export default App;
