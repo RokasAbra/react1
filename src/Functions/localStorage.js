@@ -33,3 +33,14 @@ export function remove({id}){
     localStorage.setItem(key, data);
     
 }
+
+export function edit(obj) {
+    let data = localStorage.getItem(key);// nuskaitiom
+    if (null === data) {
+        data = JSON.stringify([]);
+    }
+    data = JSON.parse(data);
+    data = data.map(oldObject => oldObject.id !== obj.id ? oldObject : obj);
+    data = JSON.stringify(data);
+    localStorage.setItem(key, data);// idedama nauja key ir data i local storage
+}

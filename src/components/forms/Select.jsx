@@ -18,7 +18,7 @@ function Select() {
       setKv((k) => [...k, kv]);
   };
   const addIr = () =>{
-    setIr((k) => [...k, ...kv]);
+    setIr([...kv]);
 };
   return (
     <>
@@ -49,7 +49,7 @@ function Select() {
         </select>
         <input type="text" onChange={inputText} value={text} />
         <div
-          className="crc"
+        //   className="crc"
           style={{
             color: color,
             fontSize: Number(font),
