@@ -28,7 +28,7 @@ class Cat{
     }
     
 }
-const myCat = new Cat('pilkis', '2');
+const myCat = new Cat('pukis', '2');
 const myCat22 = new Cat('mikis');
 console.log(myCat.name, myCat.size);
 console.log(myCat22.name);
@@ -37,29 +37,29 @@ myCat.miau(' kiss kiss');
 
 // Objektiniai Uzdaviniai
 
-class Kibiras {
-    constructor(){
-        this.akmenuKiekis = 0;
+// class Kibiras {
+//     constructor(){
+//         this.akmenuKiekis = 0;
 
-    }
-    prideti1Akmeni = () => {
-        this.akmenuKiekis += 1
-        console.log(this.akmenuKiekis);
-    }
-    pridetiDaugAkmenu = (c) => {
-        this.akmenuKiekis += c -1;
-        console.log('Daug akmenu ' + this.akmenuKiekis );
-    }
-    kiekPririnktaAkmenu = () => {
-       console.log(this.akmenuKiekis); 
-    }
-}
+//     }
+//     prideti1Akmeni = () => {
+//         this.akmenuKiekis += 1
+//         console.log(this.akmenuKiekis);
+//     }
+//     pridetiDaugAkmenu = (c) => {
+//         this.akmenuKiekis += c -1;
+//         console.log('Daug akmenu ' + this.akmenuKiekis );
+//     }
+//     kiekPririnktaAkmenu = () => {
+//        console.log(this.akmenuKiekis); 
+//     }
+// }
 
-const kbr = new Kibiras()
-console.log(kbr.akmenuKiekis);
-kbr.prideti1Akmeni()
-kbr.pridetiDaugAkmenu(10)
-kbr.kiekPririnktaAkmenu()
+// const kbr = new Kibiras()
+// console.log(kbr.akmenuKiekis);
+// kbr.prideti1Akmeni()
+// kbr.pridetiDaugAkmenu(10)
+// kbr.kiekPririnktaAkmenu()
 
 
 const m = new Map();
@@ -67,3 +67,56 @@ m.set('cat1', myCat);// ('cat1' yra key'ius-indexas kuris turi buti unikalus )
 m.set('cat2', myCat22);
 console.log(m);
 console.log(m.get('cat1'));// susirandame katina pagal key'iu
+
+
+/*Sukurti klasę Pinigine. Konstruktoriuje sukurti dvi savybes popieriniaiPinigai ir 
+metaliniaiPinigai. Parašyti metodą ideti(kiekis), kuris prideda pinigus į piniginę. 
+Jeigu kiekis nedidesnis už 2, tai prideda prie metaliniaiPinigai, jeigu kitaip- prie 
+popieriniaiPinigai. Parašykite metodą skaiciuoti(), kuris suskaičiuotų ir išvestų į konsolę 
+popieriniaiPinigai ir metaliniaiPinigai sumą. Sukurti klasės objektą ir pademonstruoti veikimą.
+Nesvarbu kokios popierinės kupiūros ir metalinės monetos egzistuoja realiame pasaulyje. */
+
+
+class Pinigine {
+    constructor() {
+        
+        this.popieriniaiPinigai = 0;
+        this.metaliniaiPinigai = 0;
+        
+        
+    }
+    ideti = (a) => {
+      if (  a > 2
+        ) {
+         this.popieriniaiPinigai += a ;
+         return console.log('popieriniaiPinigai', a )
+      }
+     else if ( a <= 2
+        ) {
+           this.metaliniaiPinigai += a 
+           return console.log('metaliniaiPinigai', a)
+      }
+    }
+    skaiciuoti = () => {
+       console.log(this.popieriniaiPinigai + this.metaliniaiPinigai)
+    }
+    metaliniai = () => {
+        this.metaliniaiPinigai;
+        console.log(this.metaliniaiPinigai);
+    }
+    popieriniai = () => {
+        this.popieriniaiPinigai
+        console.log(this.popieriniaiPinigai);
+    }
+}
+
+
+
+const sum = new Pinigine()
+sum.ideti(2);
+sum.ideti(4);
+sum.ideti(2);
+sum.ideti(3);
+sum.skaiciuoti();
+sum.metaliniai();
+sum.popieriniai();
