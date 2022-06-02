@@ -120,3 +120,73 @@ sum.ideti(3);
 sum.skaiciuoti();
 sum.metaliniai();
 sum.popieriniai();
+
+
+/*
+3.Sukurti klasę Troleibusas. Konstruktoriuje sukurti savybę keleiviuSkaicius kuri yra lygi 0.
+Parašyti du metodus: ilipa(keleiviuSkaicius) ir islipa(keleiviuSkaicius). O taip pat parašyti 
+metoda vaziuoja(), kuris į konsolę išvestų troleibusu važiuojančių keleivių skaičių. 
+Atkreipkite dėmesį, kad troleibusu važiuoti neigiamas keleivių skaičius negali.
+  */
+ /*
+4.(STATIC) Sukurti metodą keleiviuSkaiciusVisuoseTroleibusuose(), kuris rodytų bendrą keleivių skaičių visuose 
+Troleibusas objektuose. Bendram kelevių skaičiaus skaičiavimui sukurkite statinį metodą 
+bendrasKeleiviuSkaicius(keleiviuSkaicius), kuris pridėtų arba atimtų keleivius iš statinės savybės visiKeleiviai 
+(kurioje yra įrašytas bendras keleivių skaičius). Taip pat atitinkamai modifikuokite metodus 
+ilipa(keleiviuSkaicius) ir islipa(keleiviuSkaicius). */
+
+class Troleibusas{
+    static visiKeleiviai = 0;
+    static keleiviuSuma(a,b){
+        keleiviuSum = a + b;
+        return keleiviuSum;
+    }
+    constructor(){
+        this.keleiviuSkaicius = 0;
+    }
+    ilipa = (a) => {
+        let ilipo = 0;
+        this.keleiviuSkaicius = ilipo;
+        ilipo += a;
+        console.log(`Ilipa: ${ilipo} keleiviu`);
+    }
+    islipa = (b) =>{
+        let islipo = 0;
+        this.keleiviuSkaicius = islipo;
+      islipo = islipo -= b  ;
+        console.log(`Islipa:${islipo} keleiviu`);
+    }
+    vaziuoja = () => {
+        if (this.keleiviuSkaicius < 0) {
+            return console.log("Error negative count ");
+        }
+        console.log(`Autobuse vaziuoja ${this.keleiviuSkaicius} keleiviu`);
+    }
+    keleiviuSkaiciusVisuoseTroleibusuose = (keleiviuSkaicius) => {
+        keleiviuSkaicius = this.keleiviuSkaicius;
+        console.log(`Kel ${keleiviuSkaicius}`);
+    }
+}
+class KeleiviuSkaicius extends Troleibusas {
+    static keleiviuSuma(a, b){
+        return super.keleiviuSuma(a) + super.keleiviuSuma(b)
+    }
+}
+
+const keleiviai = new Troleibusas();
+const kiek = new KeleiviuSkaicius();
+keleiviai.ilipa(10);
+keleiviai.islipa(8);
+keleiviai.vaziuoja()
+keleiviai.ilipa(10);
+keleiviai.islipa(12);
+keleiviai.vaziuoja()
+keleiviai.ilipa(10);
+keleiviai.vaziuoja()
+keleiviai.keleiviuSkaiciusVisuoseTroleibusuose()
+
+console.log(kiek.keleiviuSuma());
+
+console.log('========================4===================');
+
+
