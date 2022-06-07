@@ -181,12 +181,93 @@ keleiviai.vaziuoja()
 keleiviai.ilipa(10);
 keleiviai.islipa(12);
 keleiviai.vaziuoja()
-keleiviai.ilipa(10);
+keleiviai.ilipa(15);
 keleiviai.vaziuoja()
 keleiviai.keleiviuSkaiciusVisuoseTroleibusuose()
 
-console.log(kiek.keleiviuSuma());
-
-console.log('========================4===================');
 
 
+console.log('========================9===================');
+
+/*Sukurti klasę Grybas. Sukurti klasę Krepsys. Krepsys turi savybę dydis,kuriai konstruktoriuje yra 
+priskiriama reikšmė 500 ir savybę prikrauta (kuri pradžioje lygi 0). Grybas turi tris savybes, kurios 
+taip pat yra paskaičiuojamos konstruktoriuje: valgomas, sukirmijes, svoris. Kuriant Grybo objektą jo 
+savybės turi būti atsitiktinai (rand funkcija) priskiriamos taip: valgomas- true arba false, sukirmijes- 
+true arba false ir svoris- nuo 5 iki 45. Eiti grybauti, t.y. Kurti naujus Grybas objektus, jeigu 
+nesukirmijęs ir valgomas dėti į Krepsi objektą, t.y. Vykdyti deti(grybas) metodą kol bus pririnktas 
+pilnas krepšys nesukirmijusių ir valgomų grybų (gali būti truputį daugiau nei dydis). */
+function rand(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+class Grybai {
+    constructor(valgomas, sukirmijes, svoris){
+        valgomas = Math.random() < 0.5;;
+        sukirmijes = Math.random() < 0.5;;
+        svoris = rand(5, 45);
+        this.valgomas = valgomas;
+        this.sukirmijes = sukirmijes;
+        this.svoris = svoris;
+    }
+}
+const gryb = new Grybai();
+console.log(gryb.valgomas, gryb.sukirmijes, gryb.svoris);
+class Krepšys extends Grybai{
+    constructor(dydis, prikrauta){
+        super();
+        dydis = 500;
+        prikrauta = 0;
+        dydis = this.dydis;
+        prikrauta = this.prikrauta;
+    }
+    // deti(grybas){
+    //     do {
+    //         grybas += this.svoris;
+    //     } while (this.dydis > this.prikrauta);
+    //     console.log(grybas);
+    // }
+    
+}
+
+const grybas = new Grybai();
+const g2 = new Grybai();
+
+const k = new Krepšys()
+
+
+
+// Su detytoju 9. Uzdv. Grybai
+
+
+class Grybas{
+    constructor(){
+        this.valgomasGrybas = !this.rand(0, 1);
+        this.sukirmijesGrybas = !this.rand(0, 1);
+        this.gryboSvoris = rand(5, 45);
+    }
+    rand(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+}
+
+class Krepsys{
+
+    constructor(){
+        this.dydis = 500;
+        this.prikrauta= 0;
+    }
+    deti(grybas){
+        if (grybas.valgomasGrybas && grybas.sukirmijesGrybas) {
+            this.prikrauta += grybas.gryboSvoris;
+        }
+        return this.prikrauta < this.dydis;
+    }
+}
+
+const Kreps = new Krepsys();
+while (Kreps.deti(new Grybas())) {};
+console.log(Kreps);
