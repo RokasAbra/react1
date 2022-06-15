@@ -202,13 +202,21 @@ button {
 .container {
   position: relative;
   display: flex;
-  flex-wrap: wrap;
-  width: 600px;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 800px;
   height: 350px;
-  background-color:rgb(110, 160, 181);
+  background-color:rgb(97, 183, 221);
+  box-shadow: 5px 10px rgb(146, 26, 233);
   top: 0px;
   left: 0px;
-  margin: 8px;
+  margin: 25px;
+  transition: 3s;
+}
+
+option{
+  transition: 2s;
 }
 
 
@@ -242,3 +250,14 @@ svg{
   width: 30px;
   fill: crimson;
 }
+.an{
+  width: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+// figcaption{
+//   position: relative;
+//   width: 400px;}

@@ -1,61 +1,51 @@
-import axios from 'axios';
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import './App.scss';
-import BooksReducer from './Reducers/BooksReducer';
+import ld from './Reducers/ld';
 
+const masyvas = [
+    {id:3, name: 'Jhon', bid: 495.86, date: '2022-06-01T16:37'},
+    {id:7, name: 'Peter', bid: 250.86, date: '2022-06-01T15:37'},
+    {id:5, name: 'Parker', bid: 378.96, date: '2022-06-01T08:37'},
+    {id:9, name: 'David', bid: 251.16, date: '2022-06-01T12:37'},
+    {id:12, name: 'čęLucįy', bid: 800.86, date: '2022-06-01T10:07'}
+];
 
 function App() {
-    
-    const [books, dispachBooks] = useReducer(BooksReducer, []);
+
+    const [list, dispachtList] = useReducer(ld, masyvas);
+    const [select, setSelect] = useState("bid_desc");
 
     useEffect(() => {
-        console.log('Ready');// signalas Ready, pranesa kad komponentas yra pasiruoses darbui, paleidzia tiktai tada kai viskas uzsikrauna
-        axios.get('https://in3.dev/knygos/')
-        .then( res => {
-            console.log(res.data);
-            const action = {
-                type: 'books',
-                payload: res.data,
-                
-            }
-            dispachBooks(action)
-           
-        });
-    }, []); // [] masyve useefecto valdymas,  jei tuscias pasileidzia tiktai viena vieninteli karta
-    const sort = () =>{
-        const action = {
-            type: 'sort',
-            
-        };
-        dispachBooks(action);
-    }
-    const sortDef = ()=> {
-        const action = {
-            type: 'sortDef',
-        };
-        dispachBooks(action)
-    }
-    const byPirce = ()=> {
-        const action = {
-            type: 'byPirce',
-        };
-        dispachBooks(action)
-    }
-
- 
+        dispachtList({type: select});
+    }, [select])
 
   return (
     <div className="App">
       <header className="App-header">
-          <h1>Class 022</h1>
-          <div>
-              {
-                books.length ? books.map((b) => <div key={b.id}>{b.title} <i>kaina: {b.price}eu</i></div>) : <h2>loading...</h2>
-              }
-          </div>
-          <button onClick={sort}>Sort Abc</button>
-          <button onClick={sortDef}>Sort by default</button>
-          <button onClick={byPirce}>By price</button>
+        <h2>025 Sort With Reducer</h2>
+       <div>
+           <div>
+               <select value={select} onChange={(e) => setSelect(e.target.value)}>
+                   <option value="date_asc">Date ASC</option>
+                   <option value="date_desc">Date DESC</option>
+                   <option value="bid_asc">Bid ASC</option>
+                   <option value="bid_desc">Bid DESC</option>
+                   <option value="name_asc">Name ASC</option>
+                   <option value="name_desc">Name DESC</option>
+                   <option value="name_loacaleCompare()">Name_loacaleCompare</option>
+                   <option value="rand">Random</option>
+               </select>
+           </div>
+           {
+               list.map(b => (
+               <div className='container' style={{height: '60px', padding: '15px'}}>
+                   <span>ID: {b.id}</span><br />
+                   <span>Name: {b.name}</span><br />
+                   <span>Bid: {b.bid}</span><br />
+                   <span>Date: {b.date}</span>
+               </div>))
+           }
+       </div>
       </header>
     </div>
   );
