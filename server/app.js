@@ -23,17 +23,114 @@ app.get("/", (req, res) => {
 app.get("/zuikis", (req, res) => {
   res.send("Labas, Zuiki");
 });
+
+// Read metodas get
 app.get("/medziai", (req, res) => {
   const sql = ` 
     SELECT
-    *
-    FROM trees
+    t.title AS title, g.title AS good, height, type, t.id
+    FROM trees AS t
+    LEFT JOIN goods AS g
+    ON t.good_id = g.id
   `;
-
   con.query(sql, (err, result) => {
     if (err) throw err;
 
     res.send(result);
+  });
+});
+
+
+
+//create metodas yra post su url ir duomenimis
+app.post("/medziai", (req, res) => {
+  const sql = ` 
+    INSERT INTO trees
+    (title, type, height, good_id)
+    VALUES (?, ?, ?, ?) 
+    
+  `; /// klaustukai atitinka kintamuosius
+
+  con.query(sql, [req.body.title, req.body.type, req.body.height ? req.body.height : null, req.body.good === '0' ? req.body.good : null ], (err, result) => {
+    if (err) throw err;
+
+    res.send({result, msg: {text: 'OK, Zuiki', type: 'success'}});
+  });
+});
+//delete metodas yra delete siunciam url su parametru
+app.delete("/medziai/:id", (req, res) => {
+  const sql = ` 
+    DELETE FROM trees
+    WHERE id = ?
+  `; // i klaustuka perduodame id 
+
+  con.query(sql,[req.params.id], (err, result) => {
+    if (err) throw err;
+
+    res.send({ result, msg: { text: 'OK, Bebrai', type: 'info' } });
+  });
+});
+
+//Edit  metodas put siunciam url su parametru ir duomenimis
+app.put("/medziai/:treeId", (req, res) => {
+  const sql = ` 
+    UPDATE  trees
+    SET title = ?, type = ?, height = ?, good_id = ? 
+    WHERE id = ?
+  `;
+  console.log(sql);; // i klaustuka perduodame id 
+
+  con.query(sql,[req.body.title, req.body.type, req.body.height, req.body.good,req.params.treeId], (err, result) => {
+    if (err) throw err;
+
+    res.send({ result, msg: { text: 'OK, Barsukai', type: 'danger' } });
+  });
+});
+
+app.post("/gerybes", (req, res) => {
+  const sql = ` 
+    INSERT INTO goods
+    (title)
+    VALUES (?) 
+    
+  `; /// klaustukai atitinka kintamuosius
+
+  con.query(sql, [req.body.title], (err, result) => {
+    if (err) throw err;
+
+    res.send({result, msg: {text: 'OK, Zuiki', type: 'success'}});
+  });
+});
+
+// Read metodas get
+app.get("/gerybes", (req, res) => {
+  const sql = ` 
+    SELECT
+    g.title, g.id, COUNT(t.id) AS trees_count
+    FROM trees AS t
+    RIGHT JOIN goods AS g
+    ON t.good_id = g.id
+    Group BY g.id
+    ORDER BY g.title  
+  `;
+  con.query(sql, (err, result) => {
+    if (err) throw err;
+
+    res.send(result);
+  });
+});
+
+//delete goods
+app.delete("/gerybes/:id", (req, res) => {
+  const sql = ` 
+    DELETE FROM goods
+    WHERE id = ?
+  `; // i klaustuka perduodame id 
+
+  con.query(sql,[req.params.id], (err, result) => {
+    if (err) throw err;
+
+    res.send({ result, msg: { text: 'OK, Bebrai', type: 'info' } });
   });
 });
 
